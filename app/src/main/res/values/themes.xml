@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.App" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/Primary</item>
+        <item name="colorPrimaryDark">@color/PrimaryDark</item>
+        <item name="colorAccent">@color/Accent</item>
+        <item name="Accent">@color/Accent</item>
+        <item name="Primary">@color/Primary</item>
+        <item name="PrimaryDark">@color/PrimaryDark</item>
+        <item name="PrimaryText">@color/PrimaryText</item>
+        <item name="PrimaryTextDark">@color/PrimaryTextDark</item>
+        <item name="android:textColorPrimary">@color/PrimaryText</item>
+        <item name="android:listDivider">@color/PrimaryTextDark</item>
+        <item name="android:textColorSecondary">@color/PrimaryTextDark</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="android:itemBackground">?attr/Primary</item>
+        <item name="android:textColor">?attr/PrimaryText</item>
+        <item name="colorControlNormal">?attr/PrimaryText</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
+        <item name="ToolbarTheme">@style/Theme.App</item>
+    </style>
+
+    <style name="ActionButtonOverflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">?attr/PrimaryText</item>
+    </style>
+
+    <style name="Theme.App.Dark" parent="Theme.App">
+        <item name="colorAccent">@color/Accent</item>
+        <item name="colorPrimary">@color/PrimaryBlack</item>
+        <item name="colorPrimaryDark">@color/PrimaryDarkBlack</item>
+        <item name="Accent">@color/Accent</item>
+        <item name="Primary">@color/PrimaryBlack</item>
+        <item name="PrimaryDark">@color/PrimaryDarkBlack</item>
+        <item name="PrimaryText">@color/PrimaryTextBlack</item>
+        <item name="PrimaryTextDark">@color/PrimaryTextDarkBlack</item>
+        <item name="android:listDivider">@color/PrimaryTextDarkBlack</item>
+        <item name="android:textColorPrimary">@color/PrimaryTextBlack</item>
+        <item name="android:textColorSecondary">@color/PrimaryTextDarkBlack</item>
+        <item name="android:textColor">@color/PrimaryTextBlack</item>
+        <item name="alertDialogTheme">@style/Dialog.Dark</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="ToolbarTheme">@style/Theme.App.Dark</item>
+    </style>
+
+    <style name="Theme.app.blue" parent="Theme.App">
+        <item name="Accent">@color/AccentBlue</item>
+        <item name="colorAccent">@color/AccentBlue</item>
+    </style>
+
+    <style name="Theme.app.Dark.blue" parent="Theme.App.Dark">
+        <item name="Accent">@color/AccentBlue</item>
+        <item name="colorAccent">@color/AccentBlue</item>
+    </style>
+
+    <style name="Theme.app.orange" parent="Theme.App">
+        <item name="Accent">@color/AccentOrange</item>
+        <item name="colorAccent">@color/AccentOrange</item>
+    </style>
+
+    <style name="Theme.app.Dark.orange" parent="Theme.App.Dark">
+        <item name="Accent">@color/AccentOrange</item>
+        <item name="colorAccent">@color/AccentOrange</item>
+    </style>
+
+    <style name="Theme.app.yellow" parent="Theme.App">
+        <item name="Accent">@color/AccentYellow</item>
+        <item name="colorAccent">@color/AccentYellow</item>
+    </style>
+
+    <style name="Theme.app.Dark.yellow" parent="Theme.App.Dark">
+        <item name="Accent">@color/AccentYellow</item>
+        <item name="colorAccent">@color/AccentYellow</item>
+    </style>
+
+    <style name="Theme.app.green" parent="Theme.App">
+        <item name="Accent">@color/AccentGreen</item>
+        <item name="colorAccent">@color/AccentGreen</item>
+    </style>
+
+    <style name="Theme.app.Dark.green" parent="Theme.App.Dark">
+        <item name="Accent">@color/AccentGreen</item>
+        <item name="colorAccent">@color/AccentGreen</item>
+    </style>
+
+    <style name="Theme.app.cyan" parent="Theme.App">
+        <item name="Accent">@color/AccentCyan</item>
+        <item name="colorAccent">@color/AccentCyan</item>
+    </style>
+
+    <style name="Theme.app.Dark.cyan" parent="Theme.App.Dark">
+        <item name="Accent">@color/AccentCyan</item>
+        <item name="colorAccent">@color/AccentCyan</item>
+    </style>
+
+    <style name="Theme.app.pink" parent="Theme.App">
+        <item name="Accent">@color/AccentPink</item>
+        <item name="colorAccent">@color/AccentPink</item>
+    </style>
+
+    <style name="Theme.app.Dark.pink" parent="Theme.App.Dark">
+        <item name="Accent">@color/AccentPink</item>
+        <item name="colorAccent">@color/AccentPink</item>
+    </style>
+
+    <style name="Dialog.Dark" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/PrimaryBlack</item>
+        <item name="textColorAlertDialogListItem">@color/PrimaryTextBlack</item>
+        <item name="android:textColorPrimary">@color/PrimaryTextBlack</item>
+        <item name="android:textColorSecondary">@color/PrimaryTextDarkBlack</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">?attr/PrimaryText</item>
+    </style>
+
+</resources>

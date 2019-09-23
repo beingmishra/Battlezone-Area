@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="black_overlay">#66000000</color>
+
+
+    <!-- Default -->
+    <color name="Primary">#FFFFFF</color>
+    <color name="PrimaryDark">#E5E5E5</color>
+    <color name="PrimaryText">#000000</color>
+    <color name="PrimaryTextDark">#838383</color>
+    <color name="Accent">#45C4D9</color>
+
+    <!-- Dark Mode -->
+    <color name="PrimaryBlack">#212121</color>
+    <color name="PrimaryDarkBlack">#424242</color>
+    <color name="PrimaryTextBlack">#ffffff</color>
+    <color name="PrimaryTextDarkBlack">#E0E0E0</color>
+
+    <color name="AccentBlue">#42a5f5</color>
+    <color name="AccentOrange">#cc6f4e</color>
+    <color name="AccentYellow">#e6a545</color>
+    <color name="AccentGreen">#7dc22f</color>
+    <color name="AccentCyan">#26c6da</color>
+    <color name="AccentPink">#f06292</color>
+</resources>
