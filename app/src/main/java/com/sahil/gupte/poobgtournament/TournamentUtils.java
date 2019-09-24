@@ -77,6 +77,9 @@ public class TournamentUtils {
                 case "cap":
                     tournamentDetails.put("cap", Objects.requireNonNull(ds.getValue()).toString());
                     break;
+
+                case "TID":
+                    tournamentDetails.put("TID", Objects.requireNonNull(ds.getValue()).toString());
             }
         }
         return tournamentDetails;
