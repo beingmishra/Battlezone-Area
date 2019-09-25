@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -26,7 +28,7 @@ import java.util.Objects;
 public class TournamentDialogFragment extends DialogFragment
 {
     private Context mContext;
-    private String TID;
+    private String TID, UID, DisplayName;
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -34,6 +36,8 @@ public class TournamentDialogFragment extends DialogFragment
         mContext = getActivity();
         if (getArguments() != null) {
             TID = getArguments().getString("TID");
+            UID = getArguments().getString("UID");
+            DisplayName = getArguments().getString("name");
         }
     }
 
@@ -49,9 +53,23 @@ public class TournamentDialogFragment extends DialogFragment
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(RecyclerView.VERTICAL);
         list.setLayoutManager(llm);
+
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Log.d("test", "onCreateDialog: "+TID);
         if (TID != null) {
+
             final DatabaseReference tournamentsNode = database.getReference("Tournaments");
+            final DatabaseReference requestsNode = database.getReference("Requests").child("Participate");
+
+            final Button participate = view.findViewById(R.id.participate);
+            participate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Map<String,Object> taskMap = new HashMap<>();
+                    taskMap.put(UID, DisplayName);
+                    requestsNode.child(TID).setValue(taskMap);
+                }
+            });
 
 
             tournamentsNode.addValueEventListener(new ValueEventListener() {

@@ -46,7 +46,7 @@ public class UserTournamentsFragment extends Fragment {
         final DatabaseReference tournamentsNode = database.getReference("Tournaments");
 
         final RecyclerView list = view.findViewById(R.id.tournaments_list);
-        final TournamentList listAdapter = new TournamentList(getActivity(), getFragmentManager());
+        final TournamentList listAdapter = new TournamentList(getActivity(), getFragmentManager(), user);
         list.setAdapter(listAdapter);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());

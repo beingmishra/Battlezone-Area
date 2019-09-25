@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
@@ -47,10 +48,12 @@ public class TournamentList extends RecyclerView.Adapter<TournamentList.Recycler
     }
 
     private Map<String, String> tournamentsMap;
+    private FirebaseUser firebaseUser;
 
-    public TournamentList(Activity context, FragmentManager fragmentManager) {
+    public TournamentList(Activity context, FragmentManager fragmentManager, FirebaseUser firebaseUser) {
         this.context = context;
         this.fragmentManager = fragmentManager;
+        this.firebaseUser = firebaseUser;
 
     }
 
@@ -86,7 +89,10 @@ public class TournamentList extends RecyclerView.Adapter<TournamentList.Recycler
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 TournamentDialogFragment tournamentDialogFragment = new TournamentDialogFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("TID", TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("TID"));
+                String TID = TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("TID");
+                bundle.putString("TID", TID);
+                bundle.putString("UID", firebaseUser.getUid());
+                bundle.putString("name", firebaseUser.getDisplayName());
                 tournamentDialogFragment.setArguments(bundle);
                 tournamentDialogFragment.show(ft, "dialog");
             });

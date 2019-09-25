@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,11 +41,13 @@ public class ShowTournamentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         Log.d("test", "onCreateView: view created");
         View view = inflater.inflate(R.layout.fragment_show_tournament, container, false);
 
         final RecyclerView list = view.findViewById(R.id.tournaments_list);
-        final TournamentList listAdapter = new TournamentList(getActivity(), getFragmentManager());
+        final TournamentList listAdapter = new TournamentList(getActivity(), getFragmentManager(), firebaseUser);
         list.setAdapter(listAdapter);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
