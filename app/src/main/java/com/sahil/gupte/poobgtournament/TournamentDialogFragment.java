@@ -62,6 +62,8 @@ public class TournamentDialogFragment extends DialogFragment
             final DatabaseReference requestsNode = database.getReference("Requests").child("Participate");
 
             final Button participate = view.findViewById(R.id.participate);
+            //Initialise participated to true by default to prevent sending request without checking if the user has participated or not
+            participate.setEnabled(false);
             participate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -79,6 +81,12 @@ public class TournamentDialogFragment extends DialogFragment
                     Map<String, String> participants = tournamentUtils.getParticipants(dataSnapshot, TID);
                     int size = TournamentUtils.getValuesArrayList(participants).size();
                     ArrayList<String> arrayList = TournamentUtils.getValuesArrayList(participants);
+                    if (participants.containsKey(UID)) {
+                        participate.setEnabled(false);
+                    } else {
+                        participate.setEnabled(true);
+                        participate.setText("Participated");
+                    }
                     listAdapter.setParticipantsList(arrayList);
                     listAdapter.setCount(size);
                 }
