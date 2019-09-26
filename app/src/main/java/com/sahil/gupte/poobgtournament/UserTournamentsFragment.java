@@ -45,7 +45,7 @@ public class UserTournamentsFragment extends Fragment {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference tournamentsNode = database.getReference("Tournaments");
 
-        final RecyclerView list = view.findViewById(R.id.tournaments_list);
+        final RecyclerView list = view.findViewById(R.id.user_tournaments_list);
         final TournamentList listAdapter = new TournamentList(getActivity(), getFragmentManager(), user);
         list.setAdapter(listAdapter);
 
