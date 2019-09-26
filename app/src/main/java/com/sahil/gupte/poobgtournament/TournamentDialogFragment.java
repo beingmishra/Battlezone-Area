@@ -3,10 +3,15 @@ package com.sahil.gupte.poobgtournament;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -28,7 +33,7 @@ import java.util.Objects;
 public class TournamentDialogFragment extends DialogFragment
 {
     private Context mContext;
-    private String TID, UID, DisplayName;
+    private String TID, UID, DisplayName, Tname;
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -37,7 +42,8 @@ public class TournamentDialogFragment extends DialogFragment
         if (getArguments() != null) {
             TID = getArguments().getString("TID");
             UID = getArguments().getString("UID");
-            DisplayName = getArguments().getString("name");
+            Tname = getArguments().getString("name");
+            DisplayName = getArguments().getString("Username");
         }
     }
 
@@ -54,8 +60,10 @@ public class TournamentDialogFragment extends DialogFragment
         llm.setOrientation(RecyclerView.VERTICAL);
         list.setLayoutManager(llm);
 
+        TextView title = view.findViewById(R.id.title);
+        title.setText(Tname);
+
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Log.d("test", "onCreateDialog: "+TID);
         if (TID != null) {
 
             final DatabaseReference tournamentsNode = database.getReference("Tournaments");
@@ -63,7 +71,7 @@ public class TournamentDialogFragment extends DialogFragment
 
             final Button participate = view.findViewById(R.id.participate);
             //Initialise participated to true by default to prevent sending request without checking if the user has participated or not
-            participate.setEnabled(false);
+            setDisabled(participate, "Partcipate");
             participate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -82,10 +90,9 @@ public class TournamentDialogFragment extends DialogFragment
                     int size = TournamentUtils.getValuesArrayList(participants).size();
                     ArrayList<String> arrayList = TournamentUtils.getValuesArrayList(participants);
                     if (participants.containsKey(UID)) {
-                        participate.setEnabled(false);
+                        setDisabled(participate, "Participated");
                     } else {
-                        participate.setEnabled(true);
-                        participate.setText("Participated");
+                        setEnabled(participate, "Participate");
                     }
                     listAdapter.setParticipantsList(arrayList);
                     listAdapter.setCount(size);
@@ -101,10 +108,22 @@ public class TournamentDialogFragment extends DialogFragment
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(mContext);
         builder.setView(view);
-        builder.setTitle("title");
         final AlertDialog dialog = builder.create();
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
         return dialog;
+    }
+
+    private void setDisabled(Button button, String newText) {
+        button.setEnabled(false);
+        button.setBackground(mContext.getDrawable(R.drawable.button_grayed));
+        button.setText(newText);
+    }
+
+    private void setEnabled(Button button, String newText) {
+        button.setEnabled(true);
+        button.setBackground(mContext.getDrawable(R.drawable.button));
+        button.setText(newText);
     }
 }
