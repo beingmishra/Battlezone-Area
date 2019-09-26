@@ -46,13 +46,12 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new UserTournamentsFragment();
                 break;
             case R.id.navigation_notifications:
-                fragment = new ShowTournamentFragment();
+                fragment = new OngoingFragment();
                 break;
             default:
                 fragment = new ShowTournamentFragment();
                 break;
         }
-
         replaceFragment(fragment);
     }
 
@@ -80,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         };
+
+        TournamentUtils.populateNameFromUID();
 
         super.onCreate(savedInstanceState);
 

@@ -17,9 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sahil.gupte.poobgtournament.MainActivity;
 import com.sahil.gupte.poobgtournament.R;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class SignupActivity extends AppCompatActivity {
@@ -109,6 +113,12 @@ public class SignupActivity extends AppCompatActivity {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(Username)
                 .build();
+
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference usersNode = db.child("Users");
+        Map<String, String> taskMap = new HashMap<>();
+        taskMap.put(Objects.requireNonNull(auth.getCurrentUser()).getUid(), Username);
+        usersNode.setValue(taskMap);
 
         Objects.requireNonNull(user).updateProfile(profileUpdates)
                 .addOnCompleteListener(task -> {

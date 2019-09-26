@@ -2,6 +2,8 @@ package com.sahil.gupte.poobgtournament;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TournamentList extends RecyclerView.Adapter<TournamentList.RecyclerViewHolder> {
-    private final Activity context;
     private final HashMap<Integer, RecyclerView.ViewHolder> holderHashMap = new HashMap<>();
     private FragmentManager fragmentManager;
     private ArrayList<String> tournamentList;
@@ -33,6 +34,8 @@ public class TournamentList extends RecyclerView.Adapter<TournamentList.Recycler
     }
 
     private DataSnapshot dataSnapshot;
+    private boolean ongoing;
+    private Context mContext;
 
     public void setCount(int count) {
         this.count = count;
@@ -50,11 +53,15 @@ public class TournamentList extends RecyclerView.Adapter<TournamentList.Recycler
     private Map<String, String> tournamentsMap;
     private FirebaseUser firebaseUser;
 
-    public TournamentList(Activity context, FragmentManager fragmentManager, FirebaseUser firebaseUser) {
-        this.context = context;
+    public TournamentList(Context mContext , FragmentManager fragmentManager, FirebaseUser firebaseUser, boolean ongoing) {
         this.fragmentManager = fragmentManager;
         this.firebaseUser = firebaseUser;
+        this.ongoing = ongoing;
+        this.mContext = mContext;
+    }
 
+    public TournamentList(FragmentManager fragmentManager, FirebaseUser firebaseUser, boolean ongoing) {
+        this(null, fragmentManager, firebaseUser, ongoing);
     }
 
     @Override
@@ -85,18 +92,27 @@ public class TournamentList extends RecyclerView.Adapter<TournamentList.Recycler
             holder.name.setText(TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("name"));
             holder.cap.setText(TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("cap"));
             holder.time.setText(TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("time"));
-            holder.frame.setOnClickListener(view -> {
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                TournamentDialogFragment tournamentDialogFragment = new TournamentDialogFragment();
-                Bundle bundle = new Bundle();
-                String TID = TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("TID");
-                bundle.putString("TID", TID);
-                bundle.putString("UID", firebaseUser.getUid());
-                bundle.putString("Username", firebaseUser.getDisplayName());
-                bundle.putString("name", TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("name"));
-                tournamentDialogFragment.setArguments(bundle);
-                tournamentDialogFragment.show(ft, "dialog");
-            });
+
+            if (!ongoing) {
+                holder.frame.setOnClickListener(view -> {
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    TournamentDialogFragment tournamentDialogFragment = new TournamentDialogFragment();
+                    Bundle bundle = new Bundle();
+                    String TID = TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("TID");
+                    bundle.putString("TID", TID);
+                    bundle.putString("UID", firebaseUser.getUid());
+                    bundle.putString("Username", firebaseUser.getDisplayName());
+                    bundle.putString("name", TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("name"));
+                    tournamentDialogFragment.setArguments(bundle);
+                    tournamentDialogFragment.show(ft, "dialog");
+                });
+            } else {
+                holder.frame.setOnClickListener(view -> {
+                    Intent intent = new Intent(mContext, OngoingTournamentActivity.class);
+                    intent.putExtra("TID", TournamentUtils.getTournamentDetails(tournamentList.get(position), dataSnapshot).get("TID"));
+                    mContext.startActivity(intent);
+                });
+            }
         }
     }
 

@@ -2,16 +2,15 @@ package com.sahil.gupte.poobgtournament;
 
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,18 +20,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShowTournamentFragment extends Fragment {
-
-    private Map<String, String> tournamentsList;
+public class OngoingFragment extends Fragment {
 
 
-    public ShowTournamentFragment() {
+    public OngoingFragment() {
         // Required empty public constructor
     }
 
@@ -43,11 +41,10 @@ public class ShowTournamentFragment extends Fragment {
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        Log.d("test", "onCreateView: view created");
-        View view = inflater.inflate(R.layout.fragment_show_tournament, container, false);
+        View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
 
-        final RecyclerView list = view.findViewById(R.id.tournaments_list);
-        final TournamentList listAdapter = new TournamentList(getFragmentManager(), firebaseUser, false);
+        final RecyclerView list = view.findViewById(R.id.ongoing_tournaments_list);
+        final TournamentList listAdapter = new TournamentList(getActivity(), getFragmentManager(), firebaseUser, true);
         list.setAdapter(listAdapter);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
@@ -55,16 +52,14 @@ public class ShowTournamentFragment extends Fragment {
         list.setLayoutManager(llm);
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference tournamentsNode = database.getReference("Tournaments");
+        final DatabaseReference ongoingNode = database.getReference("Ongoing");
 
-        tournamentsNode.addValueEventListener(new ValueEventListener() {
+        ongoingNode.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 TournamentUtils tournamentUtils = new TournamentUtils();
 
-                tournamentsList = tournamentUtils.getTournamentsList(dataSnapshot);
-
-                Log.d("test", "onDataChange: "+tournamentUtils.getParticipants(dataSnapshot, "Tournament1"));
+                Map<String, String> tournamentsList = tournamentUtils.getTournamentsList(dataSnapshot);
 
                 listAdapter.setDataSnapshot(dataSnapshot);
                 listAdapter.setTournamentsMap(tournamentsList);
