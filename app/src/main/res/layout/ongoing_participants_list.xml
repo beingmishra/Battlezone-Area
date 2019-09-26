@@ -9,7 +9,6 @@
         android:id="@+id/participant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="participant"
         android:textColor="?attr/PrimaryText"
         android:textSize="20sp" />
 
@@ -22,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:text="Kills:" />
+            android:text="@string/kills" />
 
         <TextView
             android:id="@+id/kills"
@@ -41,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:text="Deaths:" />
+            android:text="@string/deaths" />
 
         <TextView
             android:id="@+id/deaths"

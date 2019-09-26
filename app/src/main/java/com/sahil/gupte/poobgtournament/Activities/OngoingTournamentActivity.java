@@ -1,8 +1,7 @@
-package com.sahil.gupte.poobgtournament;
+package com.sahil.gupte.poobgtournament.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +13,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sahil.gupte.poobgtournament.Constants;
+import com.sahil.gupte.poobgtournament.CustomLists.OngoingParticipantsList;
+import com.sahil.gupte.poobgtournament.R;
+import com.sahil.gupte.poobgtournament.Utils.TournamentUtils;
 
 public class OngoingTournamentActivity extends AppCompatActivity {
 
@@ -23,7 +26,7 @@ public class OngoingTournamentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ongoing_tournament);
 
         Intent intent = getIntent();
-        String TID = intent.getStringExtra("TID");
+        String TID = intent.getStringExtra(Constants.TID);
 
         if (TID == null) {
             finish();
@@ -39,7 +42,7 @@ public class OngoingTournamentActivity extends AppCompatActivity {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         assert TID != null;
-        final DatabaseReference tournamentsNode = database.getReference("Ongoing").child(TID);
+        final DatabaseReference tournamentsNode = database.getReference(Constants.OngoingNode).child(TID);
 
         tournamentsNode.addValueEventListener(new ValueEventListener() {
             @Override

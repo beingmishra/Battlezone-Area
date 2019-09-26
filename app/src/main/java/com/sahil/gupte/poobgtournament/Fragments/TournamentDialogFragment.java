@@ -1,14 +1,11 @@
-package com.sahil.gupte.poobgtournament;
+package com.sahil.gupte.poobgtournament.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,6 +20,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sahil.gupte.poobgtournament.Constants;
+import com.sahil.gupte.poobgtournament.CustomLists.ParticipantsList;
+import com.sahil.gupte.poobgtournament.R;
+import com.sahil.gupte.poobgtournament.Utils.TournamentUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,9 +41,9 @@ public class TournamentDialogFragment extends DialogFragment
         super.onCreate(savedInstanceState);
         mContext = getActivity();
         if (getArguments() != null) {
-            TID = getArguments().getString("TID");
+            TID = getArguments().getString(Constants.TID);
             UID = getArguments().getString("UID");
-            Tname = getArguments().getString("name");
+            Tname = getArguments().getString(Constants.nameT);
             DisplayName = getArguments().getString("Username");
         }
     }
@@ -66,19 +67,16 @@ public class TournamentDialogFragment extends DialogFragment
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         if (TID != null) {
 
-            final DatabaseReference tournamentsNode = database.getReference("Tournaments");
-            final DatabaseReference requestsNode = database.getReference("Requests").child("Participate");
+            final DatabaseReference tournamentsNode = database.getReference(Constants.TournamentsNode);
+            final DatabaseReference requestsNode = database.getReference(Constants.RequestsNode).child("Participate");
 
             final Button participate = view.findViewById(R.id.participate);
             //Initialise participated to true by default to prevent sending request without checking if the user has participated or not
-            setDisabled(participate, "Partcipate");
-            participate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Map<String,Object> taskMap = new HashMap<>();
-                    taskMap.put(UID, DisplayName);
-                    requestsNode.child(TID).setValue(taskMap);
-                }
+            setDisabled(participate, mContext.getString(R.string.participate));
+            participate.setOnClickListener(view1 -> {
+                Map<String, Object> taskMap = new HashMap<>();
+                taskMap.put(UID, DisplayName);
+                requestsNode.child(TID).setValue(taskMap);
             });
 
 
@@ -90,9 +88,9 @@ public class TournamentDialogFragment extends DialogFragment
                     int size = TournamentUtils.getValuesArrayList(participants).size();
                     ArrayList<String> arrayList = TournamentUtils.getValuesArrayList(participants);
                     if (participants.containsKey(UID)) {
-                        setDisabled(participate, "Participated");
+                        setDisabled(participate, mContext.getString(R.string.participated));
                     } else {
-                        setEnabled(participate, "Participate");
+                        setEnabled(participate);
                     }
                     listAdapter.setParticipantsList(arrayList);
                     listAdapter.setCount(size);
@@ -121,9 +119,9 @@ public class TournamentDialogFragment extends DialogFragment
         button.setText(newText);
     }
 
-    private void setEnabled(Button button, String newText) {
+    private void setEnabled(Button button) {
         button.setEnabled(true);
         button.setBackground(mContext.getDrawable(R.drawable.button));
-        button.setText(newText);
+        button.setText("Participate");
     }
 }

@@ -1,4 +1,4 @@
-package com.sahil.gupte.poobgtournament;
+package com.sahil.gupte.poobgtournament.CustomLists;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
@@ -10,13 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sahil.gupte.poobgtournament.R;
+import com.sahil.gupte.poobgtournament.Utils.TournamentUtils;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class OngoingParticipantsList extends RecyclerView.Adapter<OngoingParticipantsList.RecyclerViewHolder> {
-    private final HashMap<Integer, RecyclerView.ViewHolder> holderHashMap = new HashMap<>();
-
     public void setCount(int count) {
         this.count = count;
         notifyDataSetChanged();
@@ -29,18 +29,6 @@ public class OngoingParticipantsList extends RecyclerView.Adapter<OngoingPartici
     private ArrayList<ArrayList<String>> statsList;
 
     private int count;
-
-    @Override
-    public void onViewDetachedFromWindow(@NonNull RecyclerViewHolder holder) {
-        holderHashMap.put(holder.getAdapterPosition(), holder);
-        super.onViewDetachedFromWindow(holder);
-    }
-
-    @Override
-    public void onViewAttachedToWindow(@NonNull RecyclerViewHolder holder) {
-        holderHashMap.remove(holder.getAdapterPosition());
-        super.onViewAttachedToWindow(holder);
-    }
 
     @NonNull
     @Override
@@ -71,9 +59,9 @@ public class OngoingParticipantsList extends RecyclerView.Adapter<OngoingPartici
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        TextView kills;
-        TextView deaths;
-        TextView participant;
+        final TextView kills;
+        final TextView deaths;
+        final TextView participant;
 
         RecyclerViewHolder(View view) {
             super(view);

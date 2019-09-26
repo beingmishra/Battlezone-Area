@@ -19,7 +19,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.sahil.gupte.poobgtournament.MainActivity;
+import com.sahil.gupte.poobgtournament.Activities.MainActivity;
+import com.sahil.gupte.poobgtournament.Constants;
 import com.sahil.gupte.poobgtournament.R;
 
 import java.util.HashMap;
@@ -54,13 +55,13 @@ public class SignupActivity extends AppCompatActivity {
 
         btnSignIn.setOnClickListener(v -> {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            Objects.requireNonNull(inputMethodManager).hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             finish();
         });
 
         btnSignUp.setOnClickListener(v -> {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            Objects.requireNonNull(inputMethodManager).hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
             String email = inputEmail.getText().toString().trim();
             final String username = inputUsername.getText().toString().trim();
@@ -115,7 +116,7 @@ public class SignupActivity extends AppCompatActivity {
                 .build();
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference usersNode = db.child("Users");
+        DatabaseReference usersNode = db.child(Constants.UsersNode);
         Map<String, String> taskMap = new HashMap<>();
         taskMap.put(Objects.requireNonNull(auth.getCurrentUser()).getUid(), Username);
         usersNode.setValue(taskMap);

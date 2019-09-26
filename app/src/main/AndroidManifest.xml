@@ -8,18 +8,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.App">
-        <activity android:name=".OngoingTournamentActivity"></activity>
+        android:theme="@style/Theme.App"
+        android:fullBackupContent="@xml/backup_descriptor">
+        <activity android:name=".Activities.OngoingTournamentActivity" />
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"></activity>
+            android:name=".Activities.MainActivity"
+            android:label="@string/app_name" />
         <activity
             android:name=".Auth.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.App">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

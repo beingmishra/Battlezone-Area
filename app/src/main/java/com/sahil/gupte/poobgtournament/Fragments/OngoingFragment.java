@@ -1,8 +1,7 @@
-package com.sahil.gupte.poobgtournament;
+package com.sahil.gupte.poobgtournament.Fragments;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sahil.gupte.poobgtournament.Constants;
+import com.sahil.gupte.poobgtournament.CustomLists.TournamentList;
+import com.sahil.gupte.poobgtournament.R;
+import com.sahil.gupte.poobgtournament.Utils.TournamentUtils;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -36,7 +38,7 @@ public class OngoingFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -52,13 +54,14 @@ public class OngoingFragment extends Fragment {
         list.setLayoutManager(llm);
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference ongoingNode = database.getReference("Ongoing");
+        final DatabaseReference ongoingNode = database.getReference(Constants.OngoingNode);
 
         ongoingNode.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 TournamentUtils tournamentUtils = new TournamentUtils();
 
+                //Contains list of all tournaments under Ongoing
                 Map<String, String> tournamentsList = tournamentUtils.getTournamentsList(dataSnapshot);
 
                 listAdapter.setDataSnapshot(dataSnapshot);

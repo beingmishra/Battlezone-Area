@@ -1,36 +1,29 @@
-package com.sahil.gupte.poobgtournament;
+package com.sahil.gupte.poobgtournament.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.sahil.gupte.poobgtournament.Auth.LoginActivity;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.Objects;
+import com.sahil.gupte.poobgtournament.Fragments.OngoingFragment;
+import com.sahil.gupte.poobgtournament.Fragments.ShowTournamentFragment;
+import com.sahil.gupte.poobgtournament.Fragments.UserTournamentsFragment;
+import com.sahil.gupte.poobgtournament.R;
+import com.sahil.gupte.poobgtournament.Utils.TournamentUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
                 displaySelectedFragment(item);
                 return false;
@@ -55,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(fragment);
     }
 
-    public void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment) {
         //replacing the fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
